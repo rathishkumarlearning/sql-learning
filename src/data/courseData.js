@@ -118,6 +118,13 @@ D - Delete  → DELETE
 ⚠️ Choosing the right database is crucial! Consider: data structure, relationships, scale, and query patterns.
 </warning>
 
+### Practice Exercises
+
+1. **Name 3 applications** you use daily and describe what data they store in a database.
+2. **Choose the database type**: For each scenario, pick the best database type (relational, document, key-value): (a) an e-commerce store, (b) a session cache, (c) a content management system.
+3. **Design a table**: Sketch a table for storing movie information. What columns would you include? What would be the primary key?
+4. **SQL basics**: Write the SQL to get all users named "Alice" from a users table, then write the SQL to add a new user named "Bob".
+
 Let's start learning SQL! 🚀
           `
         },
@@ -289,6 +296,13 @@ INSERT INTO products (name, price, category_id) VALUES
 ⚠️ In production, never use default PostgreSQL passwords! Always configure secure authentication.
 </warning>
 
+### Practice Exercises
+
+1. **Set up PostgreSQL** on your machine and create a database called \`practice\`.
+2. **Create the shop database** from this lesson — create the categories and products tables and insert the sample data.
+3. **Explore data types**: Create a table called \`students\` with columns for id (SERIAL), name (VARCHAR), gpa (DECIMAL), enrolled (BOOLEAN), and birthday (DATE).
+4. **Test constraints**: Try inserting a duplicate email into a UNIQUE column. Try inserting NULL into a NOT NULL column. Observe the error messages.
+
 You're ready to start querying! 🎉
           `
         }
@@ -456,6 +470,13 @@ SELECT DISTINCT category_id FROM products;
 SELECT COUNT(DISTINCT category_id) FROM products;
 \`\`\`
 
+### Practice Exercises
+
+1. **Basic queries**: From the shop database, select all products with price > $50. Then select only the name and price columns.
+2. **Pattern matching**: Find all products whose name starts with "L". Then find all products whose name contains "phone".
+3. **Multiple conditions**: Find products that are in category 1 AND have a price between $20 and $100.
+4. **NULL handling**: Add a product with no category_id. Write queries to find products WITH and WITHOUT a category.
+
 SELECT is your window into the data! 👁️
           `
         },
@@ -616,6 +637,13 @@ SELECT * FROM products WHERE id > 0 ORDER BY id LIMIT 10;
 -- Page 2 (using last ID from page 1)
 SELECT * FROM products WHERE id > 10 ORDER BY id LIMIT 10;
 \`\`\`
+
+### Practice Exercises
+
+1. **Sort products** by price (cheapest first), then by name alphabetically for products with the same price.
+2. **Pagination**: Write queries for page 1, page 2, and page 3 (10 items per page) of products sorted by price.
+3. **Top N queries**: Find the 3 most expensive products. Then find the 5 cheapest in-stock products.
+4. **Combine everything**: Write a query that finds in-stock products priced between $10 and $500, sorted by price descending, limited to 10 results.
 
 Your queries are now organized! 🎯
           `
@@ -790,6 +818,13 @@ SELECT
     SUM(price * quantity) AS inventory_value
 FROM products;
 \`\`\`
+
+### Practice Exercises
+
+1. **Basic aggregates**: Find the total number of products, average price, cheapest price, and most expensive price.
+2. **Filtered aggregates**: Count how many products are in stock. Calculate the average price of products in category 1.
+3. **Conditional counting**: Use CASE/FILTER to count products in each price range: under $20, $20-$100, over $100.
+4. **Build a dashboard query**: Write a single query that shows total products, total inventory value (sum of all prices), average price, and count of in-stock items.
 
 Aggregates turn rows into insights! 📊
           `
@@ -980,6 +1015,13 @@ FROM products
 GROUP BY category_id;
 \`\`\`
 
+### Practice Exercises
+
+1. **Group by category**: Count products per category and show the average price for each category.
+2. **Use HAVING**: Find categories with more than 1 product. Then find categories where the average price is over $50.
+3. **Combined query**: Find categories with at least 2 in-stock products, showing the category_id, product count, and total value, sorted by total value descending.
+4. **Daily analysis**: If you have timestamped data, group orders by date and show daily count and revenue. (Create sample data if needed.)
+
 GROUP BY unlocks powerful analytics! 📈
           `
         }
@@ -1157,6 +1199,13 @@ SELECT
 FROM employees e
 LEFT JOIN employees m ON e.manager_id = m.id;
 \`\`\`
+
+### Practice Exercises
+
+1. **INNER JOIN**: Join products with categories to show each product's name alongside its category name.
+2. **LEFT JOIN**: Find all categories, including those with no products. Show the category name and product count (use 0 for empty categories).
+3. **Find non-matches**: Use a LEFT JOIN to find categories that have zero products.
+4. **Multiple JOINs**: If you create an orders and order_items table, write a query that shows order details with customer names and product names.
 
 JOINs are essential for relational data! 🔗
           `
@@ -1342,6 +1391,13 @@ LEFT JOIN products p ON c.id = p.category_id
 GROUP BY c.id, c.name;
 \`\`\`
 
+### Practice Exercises
+
+1. **JOIN with aggregates**: Write a query showing each category name with its total product count and average price.
+2. **Self JOIN**: Create an employees table with a manager_id column. Write a self JOIN to show each employee with their manager's name.
+3. **CROSS JOIN**: Create sizes (S, M, L) and colors (Red, Blue, Green) tables. Use CROSS JOIN to generate all combinations for a product catalog.
+4. **Performance**: Use EXPLAIN ANALYZE on a JOIN query. Add an index on the join column and run EXPLAIN again — compare the results.
+
 You're now a JOIN master! 🏆
           `
         }
@@ -1492,6 +1548,13 @@ INSERT INTO table VALUES
 -- Even faster: COPY command (PostgreSQL)
 COPY users (name, email) FROM '/path/to/data.csv' WITH CSV;
 \`\`\`
+
+### Practice Exercises
+
+1. **Insert single row**: Add a new product to your products table using INSERT with RETURNING to get the new ID.
+2. **Insert multiple**: Insert 5 new products in a single INSERT statement.
+3. **Insert from SELECT**: Create an \`expensive_products\` table and populate it with all products priced over $100 using INSERT ... SELECT.
+4. **Handle duplicates**: Try inserting a product with a duplicate unique constraint. Then use ON CONFLICT DO NOTHING and ON CONFLICT DO UPDATE.
 
 INSERT is how data enters your database! 📥
           `
@@ -1668,6 +1731,13 @@ SELECT * FROM users WHERE deleted_at IS NULL;
 💡 Soft deletes preserve data and allow recovery. Consider this pattern for important data!
 </tip>
 
+### Practice Exercises
+
+1. **Safe UPDATE**: First SELECT the rows you want to update, then write the UPDATE statement. Increase all electronics prices by 10%.
+2. **Transaction safety**: Use BEGIN, UPDATE, check the results with SELECT, then ROLLBACK. Practice the same with COMMIT.
+3. **DELETE with caution**: Delete products that are not in stock. Use RETURNING to see what was deleted.
+4. **Soft delete**: Add a \`deleted_at\` column to your products table. Instead of deleting, update this column. Write a view that only shows non-deleted products.
+
 Modify your data with confidence! 💪
           `
         }
@@ -1838,6 +1908,13 @@ CREATE TABLE orders (
 ⚠️ Denormalization trades disk space for speed, but you must keep redundant data in sync!
 </warning>
 
+### Practice Exercises
+
+1. **Identify violations**: Look at the unnormalized order table from this lesson. List all 1NF, 2NF, and 3NF violations.
+2. **Normalize a table**: Given a flat table with customer_name, customer_email, product_name, product_price, and order_date — design a normalized schema with separate tables.
+3. **Create the normalized design**: Implement the customers, products, orders, and order_items tables from this lesson in PostgreSQL. Insert sample data.
+4. **When to denormalize**: For an e-commerce dashboard that shows order count and total revenue per customer — would you normalize or denormalize? Explain your reasoning.
+
 Good design = good performance! 📐
           `
         },
@@ -1992,6 +2069,13 @@ WHERE EXISTS (SELECT 1 FROM orders WHERE user_id = users.id)
 <tip>
 💡 The general rule: index columns you search/filter/join on, but not too many. Monitor slow queries and add indexes as needed.
 </tip>
+
+### Practice Exercises
+
+1. **Create an index**: Add an index on the email column of your users table. Use EXPLAIN ANALYZE to compare query performance before and after.
+2. **Composite index**: Create a composite index on (category_id, price). Test which queries benefit from it and which don't.
+3. **Find slow queries**: Write a query without an index on a filtered column. Use EXPLAIN ANALYZE to see the "Seq Scan". Add an index and see it change to "Index Scan".
+4. **Index audit**: List all indexes on your tables using \`\\di\` in psql. Identify any unused indexes you could drop.
 
 Fast queries make happy users! 🚀
           `
